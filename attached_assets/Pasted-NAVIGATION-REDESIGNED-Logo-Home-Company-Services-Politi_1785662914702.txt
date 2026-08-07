@@ -1,0 +1,117 @@
+NAVIGATION — REDESIGNED
+
+[Logo → Home] | Company ▾ | Services ▾ | Political Campaigns | Our Work | Resources ▾ | [Talk to Us — button]
+
+Company ▾ (dropdown): Why Us, Who We Serve, Talk to Us
+Services ▾ (dropdown): Creative & Branding, Media & PR, Market Entry & Distribution 
+  (includes FMCG Distribution + Agro Sourcing & Export), Market Research Consulting, Consulting
+Political Campaigns — standalone, visible, not nested
+Our Work — case studies, standalone
+Resources ▾ (secondary dropdown, lighter visual weight than the 4 main tabs): 
+  Markets We Serve, Affiliate Marketing, Blog
+Talk to Us — filled CTA button, visually separate from the tabs, not counted as a tab
+
+Applies on both desktop and mobile. 4 clear primary tabs + 1 muted secondary dropdown + 1 CTA button, 
+instead of 9 competing top-level items.
+
+---
+
+CONSULTING SERVICE (new, hourly-billed)
+
+Availability: Monday, Tuesday, Wednesday only, two time bands per day:
+- 8:00–9:00 AM WAT (West Africa Time)
+- 7:00–11:00 PM WAT (for clients in other time zones)
+
+Booking flow:
+1. Client selects an open slot within the available days/bands (calendar shows only real 
+   availability, blocks taken slots)
+2. Client fills a form: what they want consulted on, how they want to be involved, 
+   number of hours needed, preferred meeting mode (WhatsApp, email, Google Meet, Zoom, or Teams)
+3. Client pays for the requested hours upfront
+4. Booking confirms only after payment clears
+
+Pricing: benchmarked to industry standard. Reference points — Brand Envoy's existing project 
+rate sits at $50–150/hr (Clutch, TechBehemoths, DesignRush); general market rate for experienced 
+marketing/branding strategic consulting runs $100–300/hr. Consider a two-tier rate: standard for 
+Nigeria/Africa clients, higher for international clients. Final rate TBD by Temple.
+
+Technical build note: needs a real calendar/booking system (accurate availability, slot-blocking, 
+payment-gated confirmation) plus a payment gateway (Paystack). Both are necessary exceptions to 
+the site's "no third-party dependency" rule — flagged intentionally.
+
+---
+
+WHO WE SERVE (full page copy)
+
+WHO WE SERVE
+
+Brand Envoy Isn't For Every Brand
+
+We help brands get seen, get trusted, and get bought — across Nigeria and beyond. That takes a 
+specific kind of client, ready to build something real with us. If that's you, keep reading. If 
+it's not, we'll save us both the call.
+
+Expects us to finance their market entry
+You're not a fit if you're looking for a distributor to pay to land your product before you've 
+committed anything yourself.
+→ Already in-market, or bringing the product in themselves
+You're a fit if you have a local presence already, or you're ready to bring your own product in — 
+we take it from there into stores and build the campaign around it.
+
+Treats the agency relationship as transactional
+You're not a fit if you see us as a vendor to squeeze on price and drop the moment something gets hard.
+→ Sees this as a partnership
+You're a fit if you want a long-term relationship — some of our engagements have run for years 
+because the work kept compounding.
+
+Wants the same playbook everyone else is running
+You're not a fit if every idea needs three case studies from other Nigerian agencies before you'll 
+try it. Some of our best results came from doing what nobody else in this market was doing yet.
+→ Ready to move first
+You're a fit if you're willing to back an idea because it's right for your brand, not because it's 
+already been done by someone else.
+
+Believes the product sells itself
+You're not a fit if leadership treats marketing as an afterthought — a small budget thrown at "the 
+marketing stuff" while expecting the product to carry the business alone.
+→ Knows the brand is part of the business, not decoration on top of it
+You're a fit if leadership sees getting seen and trusted as core to growth, not a side expense.
+
+Wants to dabble or test small
+You're not a fit if you want a one-off post or a single campaign to see what happens.
+→ Ready to build something that compounds
+You're a fit if you're thinking in campaigns and market presence, not single posts.
+
+Treats brand-building as a checkbox
+You're not a fit if getting on billboards, into stores, or in front of press is just something to 
+tick off before moving on.
+→ Sees visibility as the goal, not the formality
+You're a fit if you want to actually be known, remembered, and chosen in your market — not just 
+technically "have marketing."
+
+In crisis, looking for a rescue
+You're not a fit if you're bleeding money and need a turnaround, not a campaign. We'd be doing you 
+a disservice taking your money right now.
+→ Growing, and looking for the next leg up
+You're a fit if your numbers are stable or climbing and you're ready to push further, not stop the 
+bleeding.
+
+No product-market fit yet
+You're not a fit if customers aren't sticking and the product itself is still finding its footing. 
+We can't fix that with a campaign.
+→ Has something worth telling the world about
+You're a fit if you've got a real product or brand and now need more of the right people to see it.
+
+Shopping for the cheapest quote
+You're not a fit if you're comparing five agencies purely on price.
+→ Knows what success is worth
+You're a fit if you know what winning this market means for your business and you're ready to 
+invest at the level that requires.
+
+Running for office without a real plan (political campaigns specifically)
+You're not a fit if you're exploring a candidacy with no timeline, no budget, and no urgency.
+→ A serious aspirant for 2027 and beyond
+You're a fit if you're building a real campaign — local government to presidential — and want a 
+team that's done this since 2015.
+
+[Page closes with Clutch review quotes]

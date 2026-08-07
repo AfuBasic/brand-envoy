@@ -1,0 +1,532 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: Brand Envoy Africa API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: contact
+    description: Contact and brief submission
+  - name: affiliates
+    description: Affiliate marketing management
+  - name: blog
+    description: Blog post proxy (WordPress)
+
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /contact:
+    post:
+      operationId: submitContact
+      tags: [contact]
+      summary: Submit contact/brief form
+      description: Routes to SME, Enterprise, or Campaign tier based on tier field
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactInput"
+      responses:
+        "201":
+          description: Submission received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactSubmission"
+        "400":
+          description: Validation error
+
+    get:
+      operationId: listContacts
+      tags: [contact]
+      summary: List contact submissions (admin)
+      parameters:
+        - name: tier
+          in: query
+          schema:
+            type: string
+            enum: [sme, enterprise, campaign]
+        - name: limit
+          in: query
+          schema:
+            type: number
+            default: 50
+        - name: offset
+          in: query
+          schema:
+            type: number
+            default: 0
+      responses:
+        "200":
+          description: List of contact submissions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContactSubmission"
+
+  /affiliates:
+    get:
+      operationId: listAffiliates
+      tags: [affiliates]
+      summary: List affiliate products
+      parameters:
+        - name: publishedOnly
+          in: query
+          schema:
+            type: boolean
+            default: true
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: number
+            default: 20
+        - name: offset
+          in: query
+          schema:
+            type: number
+            default: 0
+      responses:
+        "200":
+          description: List of affiliate products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AffiliateProduct"
+
+    post:
+      operationId: createAffiliate
+      tags: [affiliates]
+      summary: Create a new affiliate product listing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AffiliateInput"
+      responses:
+        "201":
+          description: Affiliate product created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AffiliateProduct"
+        "400":
+          description: Validation error
+
+  /affiliates/stats:
+    get:
+      operationId: getAffiliateStats
+      tags: [affiliates]
+      summary: Get affiliate stats summary
+      responses:
+        "200":
+          description: Affiliate statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AffiliateStats"
+
+  /affiliates/{id}:
+    get:
+      operationId: getAffiliate
+      tags: [affiliates]
+      summary: Get a single affiliate product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Affiliate product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AffiliateProduct"
+        "404":
+          description: Not found
+
+    put:
+      operationId: updateAffiliate
+      tags: [affiliates]
+      summary: Update an affiliate product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AffiliateUpdate"
+      responses:
+        "200":
+          description: Updated affiliate product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AffiliateProduct"
+        "404":
+          description: Not found
+
+    delete:
+      operationId: deleteAffiliate
+      tags: [affiliates]
+      summary: Delete an affiliate product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+
+  /affiliates/{id}/publish:
+    post:
+      operationId: publishAffiliate
+      tags: [affiliates]
+      summary: Toggle publish status of an affiliate product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PublishToggleInput"
+      responses:
+        "200":
+          description: Updated affiliate product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AffiliateProduct"
+        "404":
+          description: Not found
+
+  /blog/categories:
+    get:
+      operationId: listBlogCategories
+      tags: [blog]
+      summary: List blog categories (proxied from WordPress)
+      responses:
+        "200":
+          description: Blog categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BlogCategory"
+
+  /blog/posts:
+    get:
+      operationId: listBlogPosts
+      tags: [blog]
+      summary: List blog posts (proxied from WordPress)
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: number
+            default: 1
+        - name: perPage
+          in: query
+          schema:
+            type: number
+            default: 10
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Blog posts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPostList"
+
+  /blog/posts/{slug}:
+    get:
+      operationId: getBlogPost
+      tags: [blog]
+      summary: Get a single blog post by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Blog post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
+        "404":
+          description: Not found
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ContactInput:
+      type: object
+      required: [name, email, tier, message]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          
+        company:
+          type: ["string", "null"]
+        phone:
+          type: ["string", "null"]
+        tier:
+          type: string
+          enum: [sme, enterprise, campaign]
+        message:
+          type: string
+          minLength: 1
+        budget:
+          type: ["string", "null"]
+        market:
+          type: ["string", "null"]
+        officeLevel:
+          type: ["string", "null"]
+          enum: [local_government, state_assembly, senatorial, gubernatorial, presidential, null]
+        services:
+          type: ["array", "null"]
+          items:
+            type: string
+
+    ContactSubmission:
+      type: object
+      required: [id, name, email, tier, message, createdAt]
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        email:
+          type: string
+        company:
+          type: ["string", "null"]
+        phone:
+          type: ["string", "null"]
+        tier:
+          type: string
+          enum: [sme, enterprise, campaign]
+        message:
+          type: string
+        budget:
+          type: ["string", "null"]
+        market:
+          type: ["string", "null"]
+        officeLevel:
+          type: ["string", "null"]
+        services:
+          type: ["array", "null"]
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    AffiliateInput:
+      type: object
+      required: [productName, affiliateUrl, productInfo]
+      properties:
+        productName:
+          type: string
+          minLength: 1
+        affiliateUrl:
+          type: string
+          
+        productInfo:
+          type: string
+          minLength: 1
+        imageUrl:
+          type: ["string", "null"]
+        category:
+          type: ["string", "null"]
+        published:
+          type: boolean
+          default: false
+
+    AffiliateUpdate:
+      type: object
+      properties:
+        productName:
+          type: string
+        affiliateUrl:
+          type: string
+        productInfo:
+          type: string
+        generatedCopy:
+          type: ["string", "null"]
+        imageUrl:
+          type: ["string", "null"]
+        category:
+          type: ["string", "null"]
+        published:
+          type: boolean
+
+    AffiliateProduct:
+      type: object
+      required: [id, productName, affiliateUrl, productInfo, published, createdAt, updatedAt]
+      properties:
+        id:
+          type: number
+        productName:
+          type: string
+        affiliateUrl:
+          type: string
+        productInfo:
+          type: string
+        generatedCopy:
+          type: ["string", "null"]
+        imageUrl:
+          type: ["string", "null"]
+        category:
+          type: ["string", "null"]
+        published:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    PublishToggleInput:
+      type: object
+      required: [published]
+      properties:
+        published:
+          type: boolean
+
+    AffiliateStats:
+      type: object
+      required: [total, published, unpublished, categories]
+      properties:
+        total:
+          type: number
+        published:
+          type: number
+        unpublished:
+          type: number
+        categories:
+          type: array
+          items:
+            type: object
+            required: [category, count]
+            properties:
+              category:
+                type: string
+              count:
+                type: number
+
+    BlogPost:
+      type: object
+      required: [id, title, slug, excerpt, content, date]
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        slug:
+          type: string
+        excerpt:
+          type: string
+        content:
+          type: string
+        date:
+          type: string
+          format: date-time
+        categories:
+          type: array
+          items:
+            type: string
+        featuredImageUrl:
+          type: ["string", "null"]
+        author:
+          type: ["string", "null"]
+
+    BlogCategory:
+      type: object
+      required: [id, name, count]
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        count:
+          type: number
+
+    BlogPostList:
+      type: object
+      required: [posts, total, page, perPage]
+      properties:
+        posts:
+          type: array
+          items:
+            $ref: "#/components/schemas/BlogPost"
+        total:
+          type: number
+        page:
+          type: number
+        perPage:
+          type: number

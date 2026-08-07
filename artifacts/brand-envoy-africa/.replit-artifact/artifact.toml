@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Brand Envoy Africa"
+description = "Full marketing website for Brand Envoy Africa, a creative branding, advertising, and marketing agency headquartered in Lagos, Nigeria. Features multi-page navigation, tier-routed contact forms (SME/Enterprise/Political Campaign), an affiliate marketing mini-CMS, case studies, political campaign agency page, markets served, and blog integration."
+version = "1.0.0"
+id = "artifacts/brand-envoy-africa"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23991
+
+[services.development]
+run = "pnpm --filter @workspace/brand-envoy-africa run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/brand-envoy-africa", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/brand-envoy-africa/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23991"
+BASE_PATH = "/"

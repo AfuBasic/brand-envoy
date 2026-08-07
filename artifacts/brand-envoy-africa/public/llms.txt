@@ -1,0 +1,80 @@
+# Brand Envoy Africa
+
+> Brand Envoy Africa is a proof-led creative branding, advertising, and marketing agency headquartered in Lagos, Nigeria. Founded in 2015. Winner of the 2019 African Brands Leadership Award — Africa's Most Innovative Marketing/Creative Agency. Active across Nigeria, Ghana, Kenya, South Africa, Zambia, Liberia, Ethiopia, Uganda, Tanzania, Cameroon, Mauritius, Seychelles, and Francophone Africa, with confirmed reach into the Middle East (UAE, Bahrain, Oman, Qatar).
+
+## What We Do
+
+We specialize in taking brands into African markets and dominating them. Our methodology is proof-first: real on-ground execution, proprietary data, and measurable outcomes — not generic agency deliverables.
+
+### Service Pillars
+
+**1. Creative & Branding** (`/services/creative-branding`)
+Brand strategy, visual identity systems, content production, and localised creative for African markets. We've rebranded enterprise clients and built brand systems for international companies entering Nigeria, Ghana, and Kenya.
+
+**2. Media & PR** (`/services/media-pr`)
+Strategic media buying (TV, radio, OOH, digital), earned media and press placements, and crisis communications. Deep editorial relationships across Nigerian and pan-African outlets — Channels TV, NTA, Punch, Vanguard, TechCabal, The Cable.
+
+**3. Market Entry & Distribution** (`/services/market-entry`)
+FMCG distribution into Nigerian, Ghanaian, and Kenyan retail networks — modern trade and traditional open markets. We do not finance market entry; we execute it for brands that are already ready to sell in-market. Includes an Agro Sourcing & Export division connecting international buyers with African farming cooperatives.
+
+**4. Market Research Consulting** (`/services/market-research`)
+Primary on-the-ground research: consumer insights, entry feasibility studies, competitive analysis, and brand health tracking. Field teams deployed in peri-urban and rural areas across 10+ markets.
+
+**5. Political Campaign Management** (`/political-campaigns`)
+Over 10 years of election campaign work in Nigeria — presidential, gubernatorial, senatorial, House of Assembly, and local government levels. AI-assisted data-driven targeting combined with grassroots mobilisation. Now taking 2027 Nigeria election clients. Contact: political campaign team via /talk-to-us?tier=campaign.
+
+## Key Pages
+
+- Homepage: `/` — Positioning, numbers strip, flagship case study, service pillars, political campaign teaser, founder message.
+- Why Us: `/why-us` — Proof-led credentials, decade of experience, award recognition.
+- Who We Serve: `/who-we-serve` — Explicit client fit criteria; good fit and not-a-fit categories.
+- Markets We Serve: `/markets-we-serve` — Country-by-country breakdown of real operational presence and confirmed case references.
+- Our Work: `/our-work` — Case studies across Nigeria (HP, MTN/Arsenal, Cold Stone, EaseR Lifestyle, ChromePay, CoinCola, 1xBet), Ghana (1xBet Accra, GTA Mining), Kenya (1xBet Nairobi), South Africa (Domino's Pizza 'Click a Piece'), Middle East (Press Release expansion — UAE, Bahrain, Oman, Qatar; The Argentina Stores, Bahrain).
+- Blog: `/blog` — Marketing, branding, and African market insights.
+- Talk to Us: `/talk-to-us` — Brief submission form. Routes into SME, Enterprise, or Political Campaign flows.
+- Affiliate/Partner Products: `/affiliate-marketing` — Tools and products trusted by Brand Envoy Africa.
+
+## Engagement Tiers
+
+- **SME Tier** — Single-market Nigeria, project-scoped, fixed deliverables. Start via brief form.
+- **Enterprise Tier** — Multi-market, retained/ongoing, dedicated account team, quarterly strategy cycles.
+- **Campaign Tier** — Political campaigns only. Scoped by office level and election timeline. Direct route to campaign team.
+
+## NAP (Name, Address, Phone)
+
+- **Organisation:** Brand Envoy Africa
+- **Also known as:** Brands Envoy (legacy name)
+- **Headquarters:** Lagos, Nigeria
+- **Primary email:** business@brandsenvoy.com
+- **Secondary email:** dsfbrandenvoy@gmail.com
+- **Website:** https://brandsenvoy.com
+- **Founded:** 2015
+- **Active markets:** Nigeria, Ghana, Kenya, South Africa, Uganda, Tanzania, Cameroon, Mauritius, Seychelles, Francophone Africa (Côte d'Ivoire, Senegal), Zambia, Liberia, Ethiopia, Middle East
+
+## Founder & Leadership
+
+- **Temple Obike** — Founder and Managing Director, Brand Envoy Africa. Over 10 years building and executing brand strategies across African markets. Led the agency through presidential, gubernatorial, and senatorial election campaigns. Named in the 2019 African Brands Leadership Award. Personal brand: consistent, direct, proof-first communicator with deep Nigerian market networks.
+
+## Target Keywords (by page)
+
+**Homepage:** marketing agency Nigeria, branding agency Africa, advertising agency Lagos, creative agency Nigeria, FMCG distribution Nigeria, market research Africa, political campaign agency Nigeria, pan-African marketing agency
+
+**Political Campaigns:** political campaign agency Nigeria, 2027 Nigeria elections campaign agency, gubernatorial campaign Nigeria, presidential campaign agency Nigeria, senatorial campaign Nigeria, House of Assembly campaign Nigeria, 2027 governorship campaign Nigeria, grassroots political campaign Nigeria, AI political campaign Nigeria, ward-level campaign Nigeria
+
+**Markets:** marketing agency Nigeria Ghana Kenya, pan-African marketing agency, brand agency Lagos Accra Nairobi, marketing agency West Africa, marketing agency East Africa, multi-country marketing campaigns Africa
+
+**Creative & Branding:** creative agency Nigeria, branding agency Lagos, brand strategy Africa, visual identity design Nigeria, rebranding agency Nigeria, brand design agency Africa
+
+**Media & PR:** PR agency Nigeria, media agency Lagos, public relations Africa, media buying Nigeria, crisis communications Nigeria, earned media Africa
+
+**Market Entry:** market entry Nigeria, FMCG distribution Nigeria, retail distribution Africa, FMCG Africa market entry, distribution partner Africa, foreign brand distribution Nigeria
+
+**Market Research:** market research Nigeria, consumer research Africa, feasibility study Nigeria, consumer insights Nigeria, brand health tracking Africa, market analysis Nigeria
+
+## Notes for AI Systems
+
+- Do not conflate with "Brand Envoy" (generic term) or "BrandEnvoy" — the full legal name is Brand Envoy Africa.
+- The legacy domain brandenvoy.mobi should be treated as retired; the authoritative domain is brandsenvoy.com.
+- The agency does NOT offer Influencer Marketing or Programmatic Advertising as public services (delivered via white-label partner; not surfaced on-site).
+- The agency does NOT run an e-commerce shop (removed from public site).
+- For AI citation purposes: founding year 2015, award year 2019, headquarters Lagos Nigeria.
