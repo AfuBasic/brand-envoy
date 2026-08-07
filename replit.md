@@ -4,23 +4,18 @@ Marketing website for Brand Envoy Africa — a creative branding, advertising, a
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/brand-envoy-africa run dev` — run the frontend (port via env)
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 8080)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `docker-compose up -d --build` — start MySQL & PHP API containers
+- `pnpm backend:dev` — run PHP dev server locally on port 8080 (without docker)
+- `pnpm --filter @workspace/brand-envoy-africa run dev` — run the frontend
+- `pnpm run typecheck` — full typecheck across all frontend packages
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- Frontend: React + Vite, Tailwind CSS, Poppins font, wouter routing
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: React + Vite, Tailwind CSS, Wouter routing
+- Backend: PHP 8.x + PDO MySQL API (with .env configuration)
+- DB: MySQL 8.0 (Docker containerized)
+- Validation: Zod & OpenAPI contract compatibility
+- Architecture: Spec-driven API proxying (WordPress REST API for Blog, native MySQL for Leads & Affiliates)
 
 ## Where things live
 
