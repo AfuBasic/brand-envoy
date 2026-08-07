@@ -3,7 +3,7 @@ FROM php:8.2-apache
 # Install required PHP extensions (pdo_mysql, curl)
 RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
-    && docker-php-ext-install pdo pdo_mysql curl \
+    && docker-php-ext-install pdo pdo_mysql \
     && a2enmod rewrite
 
 # Apache rewrite configuration for /api URL rewriting
