@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // Autoload Controllers & Core Files
 require_once __DIR__ . '/config/Database.php';
+require_once __DIR__ . '/config/Mailer.php';
 require_once __DIR__ . '/controllers/ContactController.php';
 require_once __DIR__ . '/controllers/AffiliateController.php';
 require_once __DIR__ . '/controllers/BlogController.php';

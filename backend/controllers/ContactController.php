@@ -65,6 +65,22 @@ class ContactController {
 
         self::formatContactRow($row);
 
+        // Dispatch branded email notification to templeobike.com
+        $subject = "New " . strtoupper($tier) . " Lead: " . $name . " — Brand Envoy Africa";
+        $htmlContent = Mailer::buildBrandedTemplate(
+            "New Inbound Lead Submission (" . strtoupper($tier) . ")",
+            "<p><strong>Name:</strong> " . htmlspecialchars($name) . "</p>" .
+            "<p><strong>Email:</strong> <a href='mailto:" . htmlspecialchars($email) . "'>" . htmlspecialchars($email) . "</a></p>" .
+            "<p><strong>Phone:</strong> " . htmlspecialchars($data['phone'] ?? '—') . "</p>" .
+            "<p><strong>Company:</strong> " . htmlspecialchars($data['company'] ?? '—') . "</p>" .
+            "<p><strong>Tier:</strong> " . htmlspecialchars(strtoupper($tier)) . "</p>" .
+            "<p><strong>Budget:</strong> " . htmlspecialchars($data['budget'] ?? '—') . "</p>" .
+            "<p><strong>Market:</strong> " . htmlspecialchars($data['market'] ?? '—') . "</p>" .
+            "<p><strong>Office Level:</strong> " . htmlspecialchars($data['officeLevel'] ?? '—') . "</p>" .
+            "<div style='margin-top:15px;padding:15px;background:#f9fafb;border-left:4px solid #FF5733;border-radius:4px;'><strong>Message / Brief:</strong><br>" . nl2br(htmlspecialchars($message)) . "</div>"
+        );
+        Mailer::send($subject, $htmlContent);
+
         http_response_code(201);
         echo json_encode($row);
     }

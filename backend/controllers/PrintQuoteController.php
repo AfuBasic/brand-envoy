@@ -51,26 +51,20 @@ class PrintQuoteController {
     }
 
     private static function sendNotificationEmail(string $name, string $email, string $phone, array $items, string $quantity, string $notes): void {
-        $to = "dsfbrandenvoy@gmail.com";
-        $subject = "New Quote Request from {$name} — Brand Envoy Africa";
+        $subject = "New Print Quote Request from {$name} — Brand Envoy Africa";
+        $itemListHtml = "<ul>" . implode("", array_map(fn($i) => "<li>" . htmlspecialchars($i) . "</li>", $items)) . "</ul>";
 
-        $itemList = implode("\n", array_map(fn($i) => "• " . htmlspecialchars($i), $items));
+        $body = "<p><strong>Name:</strong> " . htmlspecialchars($name) . "</p>" .
+                "<p><strong>Email:</strong> <a href='mailto:" . htmlspecialchars($email) . "'>" . htmlspecialchars($email) . "</a></p>" .
+                "<p><strong>Phone:</strong> " . htmlspecialchars($phone ?: "—") . "</p>" .
+                "<p><strong>Quantity:</strong> " . htmlspecialchars($quantity ?: "—") . "</p>" .
+                "<div style='margin-top:15px;'><strong>Items Requested:</strong>" . $itemListHtml . "</div>";
 
-        $message = "New Quote Request — Brand Envoy Africa\n\n";
-        $message .= "Name:     {$name}\n";
-        $message .= "Email:    {$email}\n";
-        $message .= "Phone:    " . ($phone ?: "—") . "\n";
-        $message .= "Quantity: " . ($quantity ?: "—") . "\n\n";
-        $message .= "Items Requested:\n{$itemList}\n\n";
         if (!empty($notes)) {
-            $message .= "Notes:\n{$notes}\n";
+            $body .= "<div style='margin-top:15px;padding:12px;background:#f9fafb;border-radius:4px;'><strong>Notes:</strong><br>" . nl2br(htmlspecialchars($notes)) . "</div>";
         }
 
-        $headers = "From: Brand Envoy Africa <noreply@brandsenvoy.com>\r\n";
-        $headers .= "Reply-To: {$email}\r\n";
-        $headers .= "X-Mailer: PHP/" . phpversion();
-
-        // Attempt sending email via PHP native mail function
-        @mail($to, $subject, $message, $headers);
+        $htmlContent = Mailer::buildBrandedTemplate("New Print & Merchandise Quote Request", $body);
+        Mailer::send($subject, $htmlContent);
     }
 }
