@@ -36,7 +36,7 @@ export function Footer() {
               <li><Link href="/who-we-serve" className="hover:text-primary transition-colors">Who We Serve</Link></li>
               <li><Link href="/our-work" className="hover:text-primary transition-colors">Our Work</Link></li>
               <li><Link href="/markets" className="hover:text-primary transition-colors">Markets We Serve</Link></li>
-              <li><Link href="/blog" className="hover:text-primary transition-colors">Blog</Link></li>
+              <li><a href="https://brandsenvoy.com/blog/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Blog</a></li>
 
             </ul>
           </div>

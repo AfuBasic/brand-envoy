@@ -35,6 +35,13 @@ function ScrollToTop() {
   return null;
 }
 
+function ExternalBlogRedirect() {
+  useEffect(() => {
+    window.location.href = "https://brandsenvoy.com/blog/";
+  }, []);
+  return null;
+}
+
 function Router() {
   return (
     <>
@@ -63,9 +70,9 @@ function Router() {
         <Route path="/affiliate-marketing" component={AffiliateMarketing} />
         <Route path="/affiliate-admin" component={AffiliateAdmin} />
 
-        {/* Blog */}
-        <Route path="/blog" component={Blog} />
-        <Route path="/blog/:slug" component={BlogPost} />
+        {/* External Blog Redirect */}
+        <Route path="/blog" component={ExternalBlogRedirect} />
+        <Route path="/blog/:slug" component={ExternalBlogRedirect} />
 
         <Route component={NotFound} />
       </Switch>

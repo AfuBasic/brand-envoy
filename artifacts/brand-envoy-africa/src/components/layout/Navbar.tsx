@@ -138,7 +138,9 @@ export function Navbar() {
                 <Link href="/markets" className="w-full cursor-pointer">Markets We Serve</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/blog" className="w-full cursor-pointer">Blog</Link>
+                <a href="https://brandsenvoy.com/blog/" target="_blank" rel="noopener noreferrer" className="w-full cursor-pointer flex items-center justify-between">
+                  Blog
+                </a>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -191,7 +193,7 @@ export function Navbar() {
           {/* Resources */}
           <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground px-3 pt-3 pb-1">Resources</div>
           <Link href="/markets" onClick={closeMenu} className="pl-3 px-3 py-2.5 hover:bg-accent rounded-md text-sm text-muted-foreground">Markets We Serve</Link>
-          <Link href="/blog" onClick={closeMenu} className="pl-3 px-3 py-2.5 hover:bg-accent rounded-md text-sm text-muted-foreground">Blog</Link>
+          <a href="https://brandsenvoy.com/blog/" target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="pl-3 px-3 py-2.5 hover:bg-accent rounded-md text-sm text-muted-foreground">Blog</a>
 
           <Link
             href="/talk-to-us"
