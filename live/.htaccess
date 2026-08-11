@@ -13,6 +13,10 @@
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # Route all other SPA pages (e.g. /why-us, /talk-to-us, /affiliate-admin) to index.html
+  # Redirect legacy article slugs (e.g. /my-old-post) to https://brandsenvoy.com/blog/my-old-post/
+  RewriteCond %{REQUEST_URI} !^/(why-us|who-we-serve|our-work|talk-to-us|markets|political-campaigns|services|clutch-reviews|affiliate-marketing|affiliate-admin|api|assets) [NC]
+  RewriteRule ^([a-zA-Z0-9\-]+)/?$ https://brandsenvoy.com/blog/$1/ [R=301,L]
+
+  # Route all other SPA pages to index.html
   RewriteRule ^ index.html [L]
 </IfModule>
