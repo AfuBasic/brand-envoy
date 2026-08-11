@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Forward /api requests directly to api/index.php
+  RewriteRule ^api/(.*)$ api/index.php [QSA,L]
+
+  # Serve physical files and directories directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Route all other SPA pages (e.g. /why-us, /talk-to-us, /affiliate-admin) to index.html
+  RewriteRule ^ index.html [L]
+</IfModule>
