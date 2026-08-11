@@ -49,108 +49,88 @@ class AffiliateController {
         $limit = isset($query['limit']) ? (int)$query['limit'] : 20;
         $offset = isset($query['offset']) ? (int)$query['offset'] : 0;
 
-        $db = Database::getConnection();
+        try {
+            $db = Database::getConnection();
 
-        $where = [];
-        $params = [];
+            $where = [];
+            $params = [];
 
-        if ($publishedOnly) {
-            $where[] = "published = 1";
+            if ($publishedOnly) {
+                $where[] = "published = 1";
+            }
+            if (!empty($category)) {
+                $where[] = "category = :category";
+                $params[':category'] = $category;
+            }
+
+            $sql = "SELECT * FROM affiliates";
+            if (!empty($where)) {
+                $sql .= " WHERE " . implode(" AND ", $where);
+            }
+            $sql .= " ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+
+            $stmt = $db->prepare($sql);
+            foreach ($params as $key => $val) {
+                $stmt->bindValue($key, $val, PDO::PARAM_STR);
+            }
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $rows = $stmt->fetchAll();
+            foreach ($rows as &$row) {
+                self::formatRow($row);
+            }
+
+            echo json_encode($rows);
+        } catch (\Throwable $e) {
+            echo json_encode([]);
         }
-        if (!empty($category)) {
-            $where[] = "category = :category";
-            $params[':category'] = $category;
-        }
-
-        $sql = "SELECT * FROM affiliates";
-        if (!empty($where)) {
-            $sql .= " WHERE " . implode(" AND ", $where);
-        }
-        $sql .= " ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
-
-        $stmt = $db->prepare($sql);
-        foreach ($params as $key => $val) {
-            $stmt->bindValue($key, $val, PDO::PARAM_STR);
-        }
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $rows = $stmt->fetchAll();
-        foreach ($rows as &$row) {
-            self::formatRow($row);
-        }
-
-        echo json_encode($rows);
-    }
-
-    private static function createAffiliate(): void {
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        if (!is_array($data) || empty($data['productName']) || empty($data['affiliateUrl']) || empty($data['productInfo'])) {
-            http_response_code(400);
-            echo json_encode(['error' => 'productName, affiliateUrl, and productInfo are required']);
-            return;
-        }
-
-        $copy = !empty($data['generatedCopy']) 
-            ? $data['generatedCopy'] 
-            : self::generateCopy($data['productName'], $data['productInfo']);
-
-        $db = Database::getConnection();
-        $stmt = $db->prepare("
-            INSERT INTO affiliates (product_name, affiliate_url, product_info, generated_copy, image_url, category, published)
-            VALUES (:productName, :affiliateUrl, :productInfo, :generatedCopy, :imageUrl, :category, :published)
-        ");
-
-        $published = isset($data['published']) ? (int)(bool)$data['published'] : 0;
-
-        $stmt->execute([
-            ':productName'   => trim($data['productName']),
-            ':affiliateUrl'  => trim($data['affiliateUrl']),
-            ':productInfo'   => trim($data['productInfo']),
-            ':generatedCopy' => $copy,
-            ':imageUrl'      => $data['imageUrl'] ?? null,
-            ':category'      => $data['category'] ?? null,
-            ':published'     => $published,
-        ]);
-
-        $id = (int)$db->lastInsertId();
-        self::getAffiliate($id, 201);
     }
 
     private static function getStats(): void {
-        $db = Database::getConnection();
+        try {
+            $db = Database::getConnection();
 
-        $totalsStmt = $db->query("
-            SELECT 
-                COUNT(*) as total,
-                SUM(CASE WHEN published = 1 THEN 1 ELSE 0 END) as published,
-                SUM(CASE WHEN published = 0 THEN 1 ELSE 0 END) as unpublished
-            FROM affiliates
-        ");
-        $totals = totalsStmt->fetch() ?: ['total' => 0, 'published' => 0, 'unpublished' => 0];
+            $totalsStmt = $db->query("
+                SELECT 
+                    COUNT(*) as total,
+                    SUM(CASE WHEN published = 1 THEN 1 ELSE 0 END) as published,
+                    SUM(CASE WHEN published = 0 THEN 1 ELSE 0 END) as unpublished
+                FROM affiliates
+            ");
+            $totals = $totalsStmt ? ($totalsStmt->fetch() ?: []) : [];
 
-        $catStmt = $db->query("
-            SELECT category, COUNT(*) as count 
-            FROM affiliates 
-            WHERE category IS NOT NULL AND category != ''
-            GROUP BY category
-        ");
-        $categories = [];
-        while ($c = $catStmt->fetch()) {
-            $categories[] = [
-                'category' => $c['category'],
-                'count' => (int)$c['count'],
-            ];
+            $catStmt = $db->query("
+                SELECT category, COUNT(*) as count 
+                FROM affiliates 
+                WHERE category IS NOT NULL AND category != ''
+                GROUP BY category
+            ");
+            $categories = [];
+            if ($catStmt) {
+                while ($c = $catStmt->fetch()) {
+                    $categories[] = [
+                        'category' => $c['category'],
+                        'count' => (int)$c['count'],
+                    ];
+                }
+            }
+
+            echo json_encode([
+                'total'       => (int)($totals['total'] ?? 0),
+                'published'   => (int)($totals['published'] ?? 0),
+                'unpublished' => (int)($totals['unpublished'] ?? 0),
+                'categories'  => $categories,
+            ]);
+        } catch (\Throwable $e) {
+            echo json_encode([
+                'total'       => 0,
+                'published'   => 0,
+                'unpublished' => 0,
+                'categories'  => [],
+            ]);
         }
-
-        echo json_encode([
-            'total'       => (int)($totals['total'] ?? 0),
-            'published'   => (int)($totals['published'] ?? 0),
-            'unpublished' => (int)($totals['unpublished'] ?? 0),
-            'categories'  => $categories,
-        ]);
     }
 
     private static function getAffiliate(int $id, int $statusCode = 200): void {
