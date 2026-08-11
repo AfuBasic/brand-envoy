@@ -14,10 +14,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
-import { Pencil, Trash2, Plus, RefreshCw, BarChart2 } from "lucide-react";
+import { Pencil, Trash2, Plus, RefreshCw, BarChart2, Lock, LogOut, KeyRound } from "lucide-react";
 
 export function AffiliateAdmin() {
   const queryClient = useQueryClient();
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem("be_admin_authed") === "true";
+  });
+  const [passwordInput, setPasswordInput] = useState("");
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [authError, setAuthError] = useState("");
+
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
@@ -28,6 +35,98 @@ export function AffiliateAdmin() {
     category: "",
     published: false
   });
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!passwordInput.trim()) return;
+
+    setIsVerifying(true);
+    setAuthError("");
+
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: passwordInput.trim() }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        sessionStorage.setItem("be_admin_authed", "true");
+        setIsAuthenticated(true);
+        toast.success("Welcome to Brand Envoy Admin");
+      } else {
+        setAuthError(data.error || "Incorrect admin password");
+      }
+    } catch {
+      setAuthError("Failed to connect to backend server");
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("be_admin_authed");
+    setIsAuthenticated(false);
+    toast.info("Logged out of admin panel");
+  };
+
+  // Password Lock Screen
+  if (!isAuthenticated) {
+    return (
+      <Layout>
+        <div className="min-h-[70vh] flex items-center justify-center px-4 py-12 bg-slate-950/5">
+          <div className="w-full max-w-md bg-white border border-slate-200 shadow-2xl rounded-2xl p-8 space-y-6">
+            <div className="text-center space-y-3">
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-orange-500/10 text-orange-600 mb-2">
+                <Lock className="w-7 h-7" />
+              </div>
+              <h1 className="text-2xl font-bold text-slate-900">Brand Envoy Admin</h1>
+              <p className="text-sm text-slate-500">
+                Please enter the master admin password to access the management portal.
+              </p>
+            </div>
+
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-xs font-semibold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+                  <KeyRound className="w-3.5 h-3.5 text-orange-500" /> Admin Password
+                </label>
+                <Input
+                  type="password"
+                  placeholder="Enter admin password"
+                  value={passwordInput}
+                  onChange={(e) => {
+                    setPasswordInput(e.target.value);
+                    if (authError) setAuthError("");
+                  }}
+                  className="h-12 border-slate-300 focus:border-orange-500 focus:ring-orange-500 rounded-xl"
+                  autoFocus
+                />
+                {authError && (
+                  <p className="text-xs text-red-600 font-medium animate-shake">
+                    {authError}
+                  </p>
+                )}
+              </div>
+
+              <Button
+                type="submit"
+                disabled={isVerifying}
+                className="w-full h-12 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg"
+              >
+                {isVerifying ? "Verifying..." : "Unlock Admin Dashboard"}
+              </Button>
+            </form>
+
+            <div className="pt-2 text-center text-xs text-slate-400">
+              Authorized personnel only &bull; Brand Envoy Africa
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   const { data: stats } = useGetAffiliateStats({
     query: { queryKey: ["/api/affiliates/stats"] }
@@ -134,9 +233,14 @@ export function AffiliateAdmin() {
             <BarChart2 className="h-8 w-8 text-primary" />
             Affiliate Dashboard
           </h1>
-          <Button onClick={() => handleOpenForm()}>
-            <Plus className="h-4 w-4 mr-2" /> Add Product
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button onClick={() => handleOpenForm()}>
+              <Plus className="h-4 w-4 mr-2" /> Add Product
+            </Button>
+            <Button variant="outline" onClick={handleLogout} className="border-red-200 text-red-600 hover:bg-red-50">
+              <LogOut className="h-4 w-4 mr-2" /> Sign Out
+            </Button>
+          </div>
         </div>
 
         {/* Stats */}

@@ -85,6 +85,23 @@ switch ($route) {
         BlogController::handleRequest($method, $parts, $query);
         break;
 
+    case 'admin':
+        if (($parts[2] ?? '') === 'login' && $method === 'POST') {
+            $input = json_decode(file_get_contents('php://input'), true);
+            $password = $input['password'] ?? '';
+            $expected = $_ENV['ADMIN_PASSWORD'] ?? getenv('ADMIN_PASSWORD') ?: 'brandenvoy2026!';
+            if ($password === $expected) {
+                echo json_encode(['success' => true, 'token' => md5($expected)]);
+            } else {
+                http_response_code(401);
+                echo json_encode(['error' => 'Invalid admin password']);
+            }
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Endpoint not found']);
+        }
+        break;
+
     case 'print-quote':
         PrintQuoteController::handleRequest($method);
         break;
